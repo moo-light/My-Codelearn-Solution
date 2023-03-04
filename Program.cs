@@ -1,26 +1,15 @@
-﻿LargestDivisor(new long[] { 485, 201, 793, 1387, 335, 5561, 1517, 183, 58, 5917, 9, 1343, 6557, 365, 2993, 2813, 445, 2279, 4331, 7031, 1357, 2077, 1909, 215, 497, 403, 299, 649, 1073, 2881, 679, 6887, 437, 6497, 667, 1927, 178, 4717, 6557, 3149, 4897, 2911, 1541, 93, 1219, 1157, 871, 86, 146, 2627, 1363, 2923, 93, 14, 979, 1891, 267, 551, 4189, 629, 517, 817, 1541, 407, 3431, 4087, 3071, 93, 3599, 407, 497, 6557, 5251, 793, 1219, 3551, 5251, 6499, 118, 65, 14, 4453, 767, 1363, 365, 7081, 1457, 1387, 259, 1927, 1517, 2773, 141, 527, 1513, 2747, 34, 1387, 55, 1763});
-long[] LargestDivisor(long[] arr)
+﻿using System.Text.RegularExpressions;
+
+Console.WriteLine( GroupedBits(1000));
+int GroupedBits(int n)
 {
-    int n = arr.Length;
-    var result = new long[n];
-
-    for (int i = 0; i < n; i++)
+    if (n == 0) return 0;
+    string res = "";
+    while ((n) > 0)
     {
-        result[i] = FindLargestDivisor(arr[i]);
-    }
-    return result;
-}
+        res+= n%2==1?'1':'0';
+        n /= 2;
 
-long FindLargestDivisor(long n)
-{
-    long i = 0;
-    for ( i = n / 2; i > 0; i--)
-    {
-        while (n % i == 0)
-        {
-            return i;
-        }
     }
-
-    return i;
+    return Regex.Split(res, "1+").Length;
 }
