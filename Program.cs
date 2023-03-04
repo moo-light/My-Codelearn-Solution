@@ -1,15 +1,13 @@
-﻿using System.Text.RegularExpressions;
-
-Console.WriteLine( GroupedBits(1000));
-int GroupedBits(int n)
+﻿Console.WriteLine(CodeForceRound277_A(Convert.ToInt64(Console.ReadLine())));
+long CodeForceRound277_A(long n)
 {
-    if (n == 0) return 0;
-    string res = "";
-    while ((n) > 0)
-    {
-        res+= n%2==1?'1':'0';
-        n /= 2;
-
-    }
-    return Regex.Split(res, "1+").Length;
+    long s = 0;
+    //for(long i = 1; i <= n; i++)
+    //{
+    //    if (i % 2 == 1) s -= i;
+    //    else s+= i;
+    //    Console.WriteLine(s + " " +i) ;
+    //}
+    //return s;
+    return n % 2 == 0 ? n / 2 : -(n + 1) / 2;
 }
