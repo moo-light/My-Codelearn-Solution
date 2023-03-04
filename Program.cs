@@ -1,40 +1,26 @@
-﻿Console.WriteLine(FindNumber(438));
-int FindNumber(int n)
+﻿LargestDivisor(new long[] { 485, 201, 793, 1387, 335, 5561, 1517, 183, 58, 5917, 9, 1343, 6557, 365, 2993, 2813, 445, 2279, 4331, 7031, 1357, 2077, 1909, 215, 497, 403, 299, 649, 1073, 2881, 679, 6887, 437, 6497, 667, 1927, 178, 4717, 6557, 3149, 4897, 2911, 1541, 93, 1219, 1157, 871, 86, 146, 2627, 1363, 2923, 93, 14, 979, 1891, 267, 551, 4189, 629, 517, 817, 1541, 407, 3431, 4087, 3071, 93, 3599, 407, 497, 6557, 5251, 793, 1219, 3551, 5251, 6499, 118, 65, 14, 4453, 767, 1363, 365, 7081, 1457, 1387, 259, 1927, 1517, 2773, 141, 527, 1513, 2747, 34, 1387, 55, 1763});
+long[] LargestDivisor(long[] arr)
 {
-    string s = n.ToString();
-    if (s.Length <= 2) return n;
-    bool tang = false;
-    if (s[0] < s[1]) tang = true;
-    while (true)
+    int n = arr.Length;
+    var result = new long[n];
+
+    for (int i = 0; i < n; i++)
     {
-        bool kt = true;
-        s = n.ToString();
-        int i = 0;
-        for (i = 2; i < s.Length; i++)
-        {
-            if (s[i] == s[i - 1]) continue;
-            if ((s[i - 1] < s[i]) != tang)
-            {
-                kt = !kt;
-                break;
-            }
-        }
-        if (kt) break;
-        char[] chars = s.ToCharArray();
-        if (tang)
-        {
-            if (chars[i - 2] >= chars[i-1]) chars[i - 1]++;
-            for (i = i; i < s.Length; i++)
-                chars[i] = chars[i - 1];
-        }
-        else
-        {
-            chars[i - 1]++;
-            for (i = i; i < s.Length; i++) chars[i] = '0';
-        }
-        s = new string(chars);
-        n = Convert.ToInt32(s);
+        result[i] = FindLargestDivisor(arr[i]);
     }
-    return n;
+    return result;
 }
 
+long FindLargestDivisor(long n)
+{
+    long i = 0;
+    for ( i = n / 2; i > 0; i--)
+    {
+        while (n % i == 0)
+        {
+            return i;
+        }
+    }
+
+    return i;
+}
