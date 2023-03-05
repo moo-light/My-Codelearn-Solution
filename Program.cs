@@ -1,24 +1,27 @@
-﻿Console.WriteLine(ElectronicScreen("01110110010111110000010101111101"));
-string ElectronicScreen(string s)
+﻿Console.WriteLine(ExtrapolateRanges("5,53,4,49,31,8,9,8,7,3,31,53"));
+string ExtrapolateRanges(string str)
 {
-    Dictionary<string, int> dict = new()
+    var a = str.Split(',').Select(x => Convert.ToInt32(x)).Distinct().ToArray();
+
+    for (int i = 0; i < a.Length - 1; i++)
+        for (int j = i + 1; j < a.Length; j++)
+        {
+            if (a[i] > a[j])
+            {
+                var t = a[i]; a[i] = a[j]; a[j] = t;
+            }
+        }
+    var res = "";
+    for (int i = 0; i < a.Length; i++)
     {
-        { "00000101", 1 },
-        { "01110110", 2 },
-        { "01110101", 3 },
-        { "00101101", 4 },
-        { "01111001", 5 },
-        { "01111011", 6 },
-        { "01000101", 7 },
-        { "01111111", 8 },
-        { "01111101", 9 },
-        { "01011111", 0 }
-    };
-    string res = "";
-    for (int i = 0; i * 8 < s.Length; i++)
-    {
-        int j = i * 8;
-        res += dict[s.Substring(j,  8)];
+        string @short = a[i].ToString();
+        if (i + 1 < a.Length && a[i + 1] == a[i] + 1)
+        {
+            while (i + 1 < a.Length && a[i + 1] == a[i] + 1) i++;
+            @short += "-" + a[i];
+        }
+        if (res == "") res = @short;else
+        res = res + "," + @short;
     }
     return res;
 }
