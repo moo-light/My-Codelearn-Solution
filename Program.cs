@@ -6,6 +6,7 @@ string ExtrapolateRanges(string str)
     for (int i = 0; i < a.Length - 1; i++)
         for (int j = i + 1; j < a.Length; j++)
         {
+            if (a[j] < 0) return "undefined";
             if (a[i] > a[j])
             {
                 var t = a[i]; a[i] = a[j]; a[j] = t;
