@@ -1,28 +1,49 @@
-﻿Console.WriteLine(ExtrapolateRanges("5,53,4,49,31,8,9,8,7,3,31,53"));
-string ExtrapolateRanges(string str)
+﻿
+Console.WriteLine(CountPower(new int[] { 4, 2, 0, 4, 4, 0 }, 4));
+int CountPower(int[] arr, int k)
 {
-    var a = str.Split(',').Select(x => Convert.ToInt32(x)).Distinct().ToArray();
+    long result = 0;
+    Solve(arr, Convert.ToInt32(Math.Pow(2, k)), ref result);
+    return (int)(result % 1000000007);
+}
+void Solve(int[] a, int k, ref long result)
+{
+    int[] arr = a.Where(x => x != -1).ToArray().Clone() as int[];
 
-    for (int i = 0; i < a.Length - 1; i++)
-        for (int j = i + 1; j < a.Length; j++)
-        {
-            if (a[j] < 0) return "undefined";
-            if (a[i] > a[j])
-            {
-                var t = a[i]; a[i] = a[j]; a[j] = t;
-            }
-        }
-    var res = "";
-    for (int i = 0; i < a.Length; i++)
+    for (int i = 0; i < arr.Length; i++)
     {
-        string @short = a[i].ToString();
-        if (i + 1 < a.Length && a[i + 1] == a[i] + 1)
+        if (arr[i] == 0)
         {
-            while (i + 1 < a.Length && a[i + 1] == a[i] + 1) i++;
-            @short += "-" + a[i];
+            arr[i] = 2; Solve(arr, k, ref result);
+            arr[i] = 4; Solve(arr, k, ref result);
+            return;
         }
-        if (res == "") res = @short;else
-        res = res + "," + @short;
     }
-    return res;
+    Console.Write(" "  );
+    PrintArray(arr);
+
+    for (int i = 0; i < arr.Length; i++)
+    {
+        if (i + 1 == arr.Length || arr[i] == -1) continue;
+        //for (int j = i+1; j < arr.Length; j++)
+            if (arr[i] != arr[i+1]) continue;
+            arr[i+1] += arr[i];
+            arr[i] = -1;
+    PrintArray(arr);
+            i = 0;
+        break;
+
+    }
+    if (arr.Contains(-1)) Solve(arr, k, ref result);
+    else
+    {
+        if (arr.Where(x => x >= k).Count() > 0) result++;
+    }
+    Console.WriteLine();
+}
+
+void PrintArray<T>(T[] arr)
+{
+    arr.ToList().ForEach(x => Console.Write(x + " "));
+    Console.WriteLine();
 }
